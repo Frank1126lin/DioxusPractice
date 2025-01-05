@@ -6,11 +6,16 @@ const MAIN_CSS: Asset = asset!("/assets/main.css");
 
 fn main() {
     // dioxus::launch(App);
-    let config = Config::new().with_menu(None).with_window(
-        WindowBuilder::new()
-            .with_title("ImageViewer")
-            .with_resizable(true),
-    );
+    let config = Config::new()
+        .with_menu(None)
+        .with_disable_context_menu(true)
+        .with_window(
+            WindowBuilder::new()
+                .with_title("图片查看")
+                .with_resizable(true)
+                .with_inner_size(dioxus_desktop::LogicalSize::new(800.0, 600.0))
+                ,
+        );
     dioxus_desktop::launch::launch(
         App,
         Vec::new(),             // contexts
@@ -89,45 +94,31 @@ fn App() -> Element {
     rsx! {
         document::Link { rel: "stylesheet", href: MAIN_CSS }
         div {
-            id: "contaner",
-            img {
-                id: "img",
-                src: "{img_src}",
-                max_height: "1000px",
+            class: "main-container",
+            div {
+                class: "img-container",
+                img {
+                    src: "{img_src}",
+                }
+            }
+            div {
+                class: "button-container",
+                button {
+                    onclick: prev,
+                    class: "nav-button",
+                    "上一张"
+                }
+                button {
+                    onclick: open,
+                    class: "nav-button",
+                    "打开图片"
+                }
+                button {
+                    onclick: next,
+                    class: "nav-button",
+                    "下一张"
+                }
             }
         }
-        div {
-            style: "display: flex; gap: 25px;", // 使用 flex 布局并设置间距
-
-            button {
-                id: "button",
-                onclick: prev,
-                id: "prev",
-                width: "100px",
-                height: "100px",
-                font_size: "20px",
-                "上一张"
-            }
-            button {
-                id: "button",
-                onclick: open,
-                id: "open",
-                width: "100px",
-                height: "100px",
-                font_size: "20px",
-                "打开图片"
-            }
-
-            button {
-                id: "button",
-                onclick: next,
-                id: "next",
-                width: "100px",
-                height: "100px",
-                font_size: "20px",
-                "下一张"
-            }
-        }
-
     }
 }

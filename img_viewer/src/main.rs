@@ -41,6 +41,10 @@ fn App() -> Element {
     let mut img_src = use_signal(|| "".to_string());
     // 添加缩放比例 state，初始值为 1.0
     let mut scale = use_signal(|| 1.0);
+    // 添加拖拽相关状态
+    let mut is_dragging = use_signal(|| false);
+    let mut start_pos = use_signal(|| (0.0, 0.0));
+    let mut offset = use_signal(|| (0.0, 0.0));
 
     let open = move |_| {
         img_path_list.clear();
@@ -123,10 +127,30 @@ fn App() -> Element {
             div {
                 class: "img-container",
                 onwheel: handle_wheel,
+                onmousedown: move |evt| {
+                    is_dragging.set(true);
+                    start_pos.set((evt.data.client_coordinates().x, evt.data.client_coordinates().y));
+                },
+                onmousemove: move |evt| {
+                    if is_dragging() {
+                        let current_x = evt.data.client_coordinates().x;
+                        let current_y = evt.data.client_coordinates().y;
+                        let (start_x, start_y) = start_pos();
+                        let (offset_x, offset_y) = offset();
+                        offset.set((offset_x + (current_x - start_x), offset_y + (current_y - start_y)));
+                        start_pos.set((current_x, current_y));
+                    }
+                },
+                onmouseup: move |_| {
+                    is_dragging.set(false);
+                },
+                onmouseleave: move |_| {
+                    is_dragging.set(false);
+                },
                 img {
                     src: "{img_src}",
                     // 使用 transform: scale() 应用缩放
-                    style: "transform: scale({scale}); transition: transform 0.1s;"
+                    style: "transform: scale({scale}) translate({offset().0}px, {offset().1}px); transition: transform 0.1s; cursor: grab;"
                 }
             }
             div {

@@ -9,6 +9,7 @@ edition = "2021"
 [dependencies]
 dioxus = { version = "0.6.0", features = [] }
 dioxus-desktop = "0.6.1"
+dioxus-html = "0.6.1"
 native-dialog = "0.7.0"
 
 [features]

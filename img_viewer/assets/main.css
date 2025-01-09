@@ -22,6 +22,10 @@
     align-items: center;
     padding: 5px;
     overflow: hidden;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
 }
 
 .img-container img {
@@ -31,6 +35,7 @@
     display: block;
     transform-origin: center center; /* 确保从中心点缩放 */
     will-change: transform; /* 优化性能 */
+    pointer-events: none; /* 防止图片干扰拖拽事件 */
 }
 
 .button-container {

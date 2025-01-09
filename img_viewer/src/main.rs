@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 use dioxus_desktop::{Config, WindowBuilder};
+use dioxus_html::geometry::WheelDelta;
 use native_dialog::FileDialog;
-use dioxus_html::geometry:: WheelDelta;
 
 const MAIN_CSS: Asset = asset!("/assets/main.css");
 
@@ -14,7 +14,7 @@ fn main() {
             WindowBuilder::new()
                 .with_title("图片查看")
                 .with_resizable(true)
-                .with_inner_size(dioxus_desktop::LogicalSize::new(800.0, 600.0))
+                .with_inner_size(dioxus_desktop::LogicalSize::new(800.0, 600.0)),
         );
     dioxus_desktop::launch::launch(
         App,
@@ -27,7 +27,7 @@ fn is_image(path: &std::path::Path) -> bool {
     let img_vec = ["png", "jpg", "jpeg", "gif", "bmp"];
 
     match path.extension() {
-        Some(ext) => {img_vec.contains(&ext.to_str().unwrap())}
+        Some(ext) => img_vec.contains(&ext.to_str().unwrap()),
         None => false,
     }
 }
@@ -66,6 +66,7 @@ fn App() -> Element {
                 current_index.set(index);
             }
             scale.set(1.0);
+            offset.set((0.0, 0.0));
             img_src.set(path.display().to_string());
         }
     };
@@ -82,6 +83,7 @@ fn App() -> Element {
         }
         let cur_path = img_path_list()[current_index()].display().to_string();
         scale.set(1.0);
+        offset.set((0.0, 0.0));
         img_src.set(cur_path);
     };
     let prev = move |_| {
@@ -97,6 +99,7 @@ fn App() -> Element {
         }
         let cur_path = img_path_list()[current_index()].display().to_string();
         scale.set(1.0);
+        offset.set((0.0, 0.0));
         img_src.set(cur_path);
     };
 
@@ -104,19 +107,22 @@ fn App() -> Element {
     let handle_wheel = move |evt: Event<WheelData>| {
         // 处理滚轮事件
         let delta = match evt.data.delta() {
-           
             WheelDelta::Pixels(pixels) => {
-                if pixels.y < 0.0 { 0.1_f64 } else { -0.1_f64 }
+                if pixels.y < 0.0 {
+                    0.1_f64
+                } else {
+                    -0.1_f64
+                }
             }
             // WheelDelta::Lines(lines) => {
             //     if lines.y < 0.0 { 0.1_f64 } else { -0.1_f64 }
             // }
             // WheelDelta::Pages(pages) => {
             //     if pages.y < 0.0 { 0.1_f64 } else { -0.1_f64 }}
-            _ => { 1.0_f64 }
+            _ => 1.0_f64,
         };
         // 限制缩放范围，防止过分缩放
-        let new_scale = (scale() as f64 + delta).max(0.1_f64).min(5.0_f64);
+        let new_scale = (scale() as f64 + delta).clamp(0.1_f64, 5.0_f64);
         scale.set(new_scale);
     };
 
@@ -137,7 +143,9 @@ fn App() -> Element {
                         let current_y = evt.data.client_coordinates().y;
                         let (start_x, start_y) = start_pos();
                         let (offset_x, offset_y) = offset();
-                        offset.set((offset_x + (current_x - start_x), offset_y + (current_y - start_y)));
+                        let delta_x = (current_x - start_x) / scale();
+                        let delta_y = (current_y - start_y) / scale();
+                        offset.set((offset_x + delta_x, offset_y + delta_y));
                         start_pos.set((current_x, current_y));
                     }
                 },
@@ -150,7 +158,7 @@ fn App() -> Element {
                 img {
                     src: "{img_src}",
                     // 使用 transform: scale() 应用缩放
-                    style: "transform: scale({scale}) translate({offset().0}px, {offset().1}px); transition: transform 0.1s; cursor: grab;"
+                    style: "transform: scale({scale}) translate({offset().0}px, {offset().1}px); cursor: normal;"
                 }
             }
             div {

@@ -3,7 +3,9 @@ use dioxus_desktop::{Config, WindowBuilder};
 use dioxus_html::geometry::WheelDelta;
 use native_dialog::FileDialog;
 
-const MAIN_CSS: Asset = asset!("/assets/main.css");
+// const MAIN_CSS: Asset = asset!("/assets/main.css");
+// 将 CSS 作为静态字符串包含
+static MAIN_CSS: &str = include_str!("../assets/main.css");
 
 fn main() {
     // dioxus::launch(App);
@@ -122,12 +124,14 @@ fn App() -> Element {
             _ => 1.0_f64,
         };
         // 限制缩放范围，防止过分缩放
-        let new_scale = (scale() as f64 + delta).clamp(0.1_f64, 5.0_f64);
+        let new_scale = (scale() as f64 + delta).clamp(0.05_f64, 20.0_f64);
         scale.set(new_scale);
     };
 
     rsx! {
-        document::Link { rel: "stylesheet", href: MAIN_CSS }
+        // document::Link { rel: "stylesheet", href: MAIN_CSS }
+        // 使用 style 标签内联 CSS，而不是外部链接
+        style { "{MAIN_CSS}" }
         div {
             class: "main-container",
             div {

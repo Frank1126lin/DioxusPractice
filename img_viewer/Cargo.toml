@@ -1,5 +1,5 @@
 [package]
-name = "img_view"
+name = "img_viewer"
 version = "0.1.0"
 authors = ["Andy <frank1126.lin@gmail.com>"]
 edition = "2021"

@@ -1,12 +1,12 @@
 [application]
 
 # App (Project) Name
-name = "img_view"
+name = "img_viewer"
 
 [web.app]
 
 # HTML title tag content
-title = "img_view"
+title = "img_viewer"
 
 # include `assets` in web platform
 [web.resource]
@@ -22,3 +22,10 @@ script = []
 # Javascript code file
 # serve: [dev-server] only
 script = []
+
+[bundle]
+identifier = "com.dm"
+publisher = "MyCompany"
+# The list of files to include in the bundle. These can contain globs.
+resources = ["assets/main.css"]
+icon = ["assets/icon48.png"]

@@ -1,0 +1,11 @@
+[package]
+name = "dioplayer"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+dioxus = { version = "0.6", features = ["desktop"] }
+rfd = "0.15.2"
+rodio = "0.20.1"
+# rodio = "0.17"
+# rfd = "0.14"

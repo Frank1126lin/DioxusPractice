@@ -27,5 +27,5 @@ script = []
 identifier = "com.dm"
 publisher = "MyCompany"
 # The list of files to include in the bundle. These can contain globs.
-resources = ["assets/main.css"]
-icon = ["assets/icon48.png"]
+resources = ["assets\\main.css"]
+icon = ["icons\\icon48.png"]

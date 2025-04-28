@@ -1,11 +1,19 @@
+#![cfg_attr(not(test), windows_subsystem = "windows")]
+
 use dioxus::prelude::*;
 use dioxus_desktop::{Config, WindowBuilder};
 use dioxus_html::geometry::WheelDelta;
 use native_dialog::FileDialog;
+use base64::{engine::general_purpose::STANDARD, Engine as _}; 
+// use base64;
+
+
 
 // const MAIN_CSS: Asset = asset!("/assets/main.css");
 // 将 CSS 作为静态字符串包含
-static MAIN_CSS: &str = include_str!("../assets/main.css");
+static MAIN_CSS: &str = include_str!("..\\assets\\main.css");
+
+
 
 fn main() {
     // dioxus::launch(App);
@@ -69,7 +77,10 @@ fn App() -> Element {
             }
             scale.set(1.0);
             offset.set((0.0, 0.0));
-            img_src.set(path.display().to_string());
+            let img_data = std::fs::read(&path).unwrap();
+            let base64_data = STANDARD.encode(&img_data);
+            img_src.set(format!("data:image/png;base64,{}", base64_data));
+            // img_src.set(path.display().to_string().replace("\\", "/"));
         }
     };
 
@@ -86,7 +97,10 @@ fn App() -> Element {
         let cur_path = img_path_list()[current_index()].display().to_string();
         scale.set(1.0);
         offset.set((0.0, 0.0));
-        img_src.set(cur_path);
+        let img_data = std::fs::read(&cur_path).unwrap();
+        let base64_data = STANDARD.encode(&img_data);
+        img_src.set(format!("data:image/png;base64,{}", base64_data));
+        // img_src.set(cur_path);
     };
     let prev = move |_| {
         if img_path_list().is_empty() {
@@ -102,7 +116,10 @@ fn App() -> Element {
         let cur_path = img_path_list()[current_index()].display().to_string();
         scale.set(1.0);
         offset.set((0.0, 0.0));
-        img_src.set(cur_path);
+        let img_data = std::fs::read(&cur_path).unwrap();
+        let base64_data = STANDARD.encode(&img_data);
+        img_src.set(format!("data:image/png;base64,{}", base64_data));
+        // img_src.set(cur_path);
     };
 
     // 添加滚轮事件处理函数

@@ -1,0 +1,23 @@
+[application]
+
+[web.app]
+
+# HTML title tag content
+title = "mail_client"
+
+# include `assets` in web platform
+[web.resource]
+
+# Additional CSS style files
+style = []
+# resources = ["assets\\main.css"]
+# icon = ["icons\\icon48.png"]
+
+# Additional JavaScript files
+script = []
+
+[web.resource.dev]
+
+# Javascript code file
+# serve: [dev-server] only
+script = []

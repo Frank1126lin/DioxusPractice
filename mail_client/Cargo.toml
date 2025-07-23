@@ -1,0 +1,38 @@
+[package]
+name = "mail_client"
+version = "0.1.0"
+authors = ["andy <frank1126.lin@gmail.com>"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+dioxus = { version = "0.6.1", features = ["desktop"] }
+dioxus-desktop = "0.6.1"    
+mailparse = "0.14"
+lettre = { version = "0.11", features = ["smtp-transport", "builder", "file-transport"] }
+async-imap = "0.9"
+async-native-tls = "0.5"
+async-std = { version = "1.12", features = ["attributes"] }
+futures-util = { version = "0.3", features = ["compat"] }
+serde = "1.0.219"
+serde_json = "1.0"
+chrono = "0.4.41"
+
+[features]
+default = ["desktop"]
+web = ["dioxus/web"]
+desktop = ["dioxus/desktop"]
+mobile = ["dioxus/mobile"]
+
+[profile]
+
+[profile.wasm-dev]
+inherits = "dev"
+opt-level = 1
+
+[profile.server-dev]
+inherits = "dev"
+
+[profile.android-dev]
+inherits = "dev"

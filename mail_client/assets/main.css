@@ -1,0 +1,667 @@
+/* 美化CSS样式以匹配QQ邮箱界面 - 调整后版本 */
+
+/* 基本重置和共享样式 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  color: #333;
+  background-color: #f2f6fc;
+  line-height: 1.5;
+}
+
+/* 应用容器 */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 顶部导航栏 - 仿QQ邮箱 */
+.top-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f2f6fc;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  height: 60px;
+}
+
+.top-navbar .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.top-navbar .logo h1 {
+  font-size: 1.25rem;
+  color: #0066FF;
+  font-weight: 700;
+  margin: 0;
+}
+
+.search-bar {
+  flex-grow: 1;
+  max-width: 500px;
+  margin: 0 2rem;
+  position: relative;
+}
+
+.search-bar input {
+  width: 100%;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 0.4rem 2rem 0.4rem 1rem;
+  font-size: 0.9rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.user-info span {
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.dropdown-arrow {
+  font-size: 0.7rem;
+  color: #6b7280;
+}
+
+/* 主体内容区 */
+.mail-content {
+  display: flex;
+  height: calc(100vh - 60px); /* 减去顶部导航栏的高度 */
+  overflow: hidden;
+}
+
+/* 侧边栏 - 仿QQ邮箱 */
+.sidebar {
+  background: #f2f6fc;
+  color: #4b5563;
+  width: 15%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #e2e8f0;
+  overflow-y: auto;
+}
+
+/* 写信按钮 */
+.compose-button {
+  background-color: #0066FF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.6rem 1rem;
+  font-weight: 500;
+  font-size: 1rem;
+  margin: 1rem;
+  width: calc(100% - 2rem);
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.compose-button .icon {
+  font-size: 1.2rem;
+}
+
+.compose-button:hover {
+  background-color: #0052cc;
+}
+
+/* 侧边栏内容 */
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* 侧边栏菜单 */
+.sidebar-menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu-item {
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-menu-link {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  gap: 0.75rem;
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+.sidebar-menu-link:hover {
+  background-color: #e6f0ff;
+}
+
+.sidebar-menu-link.active {
+  background-color: #e6f0ff;
+  color: #0066FF;
+  font-weight: 500;
+  border-left: 3px solid #0066FF;
+}
+
+.sidebar-menu-link .icon {
+  font-size: 1.1rem;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 账户信息 */
+.account-info {
+  margin-top: auto;
+  padding: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.current-account {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background-color: #f8fafc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.account-icon {
+  font-size: 1.1rem;
+}
+
+.account-address {
+  font-size: 0.9rem;
+  color: #4b5563;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 邮件列表 - 中间区域 */
+.email-list {
+  background-color: #f8f9fa;
+  width: 25%;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 邮件列表工具栏 */
+.email-list-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: #f8f9fa;
+  min-height: 40px;
+}
+
+.checkbox-and-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.checkbox-and-actions input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+.checkbox-and-actions span {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-right: 0.75rem;
+}
+
+.view-options {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+}
+
+.action-btn:hover {
+  background-color: #e6f0ff;
+  color: #0066FF;
+}
+
+/* 邮件分类导航 */
+.email-category-tabs {
+  display: flex;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 1rem;
+  background-color: #f8f9fa;
+}
+
+.tab {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.tab:hover {
+  color: #0066FF;
+}
+
+.tab.active {
+  color: #0066FF;
+  border-bottom: 2px solid #0066FF;
+  font-weight: 500;
+}
+
+/* 收件箱容器 */
+.inbox-container {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* 邮件项 */
+.email-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.email-item {
+  display: flex;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  cursor: pointer;
+  background-color: white;
+  transition: background-color 0.1s;
+}
+
+.email-item:hover {
+  background-color: #f2f6fc;
+}
+
+.email-item.selected {
+  background-color: #e6f0ff;
+}
+
+.email-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  padding-right: 0.75rem;
+}
+
+.email-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.email-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.email-sender {
+  font-weight: 500;
+  color: #4b5563;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.email-date {
+  color: #6b7280;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  margin-left: 0.5rem;
+}
+
+.email-subject {
+  color: #6b7280;
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.email-item.unread .email-sender,
+.email-item.unread .email-subject {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* 内容区域 */
+.content-panel {
+  flex: 1;
+  overflow: auto;
+  background-color: white;
+}
+
+/* 欢迎信息 */
+.welcome-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #6b7280;
+  padding: 2rem;
+}
+
+.welcome-message h2 {
+  font-size: 1.5rem;
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+
+/* 调整器 */
+.resizer {
+  width: 5px;
+  background-color: transparent;
+  cursor: col-resize;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  z-index: 100;
+  transition: background-color 0.2s;
+}
+
+.resizer:hover,
+.resizing .resizer {
+  background-color: #0066FF;
+  opacity: 0.3;
+}
+
+/* 当正在调整大小时的样式 */
+.resizing {
+  user-select: none;
+  cursor: col-resize;
+}
+
+.resizing * {
+  pointer-events: none;
+}
+
+/* 确保内容区域相对定位，以便调整手柄可以正确定位 */
+.sidebar, 
+.email-list, 
+.content-panel {
+  position: relative;
+  overflow: hidden;
+  transition: width 0.1s;
+}
+
+/* 正在调整大小时禁用过渡效果，确保平滑跟随鼠标 */
+.resizing .sidebar,
+.resizing .email-list,
+.resizing .content-panel {
+  transition: none;
+}
+
+/* 写邮件容器 */
+.composer-container {
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 2rem);
+  max-width: 800px;
+  width: 100%;
+}
+
+.composer-container.full-width {
+  max-width: none;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* 写邮件标题栏 */
+.composer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.composer-header h2 {
+  font-size: 1.25rem;
+  color: #1f2937;
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #1f2937;
+}
+
+/* 写邮件表单 */
+.composer-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.form-group label {
+  width: 70px;
+  color: #4b5563;
+  font-weight: 500;
+  text-align: right;
+  padding-right: 1rem;
+  flex-shrink: 0;
+}
+
+.form-control {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+.form-textarea {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  resize: vertical;
+  min-height: 200px;
+}
+
+.form-textarea.expanded {
+  height: 100%;
+  min-height: 300px;
+}
+
+/* 写邮件底部工具栏 */
+.composer-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0 0 0;
+  border-top: 1px solid #e2e8f0;
+  margin-top: auto;
+}
+
+.attachment-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.attachment-list {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.send-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.status-message {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+/* 按钮样式 */
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border: none;
+}
+
+.btn-primary {
+  background-color: #0066FF;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0052cc;
+}
+
+.btn-primary:disabled {
+  background-color: #a3a3a3;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+}
+
+.btn-secondary:hover {
+  background-color: #e5e7eb;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6b7280;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #d1d5db;
+}
+
+.empty-hint {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  margin-top: 0.5rem;
+}
+
+/* 加载指示器 */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  color: #6b7280;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 20%;
+  }
+  
+  .email-list {
+    width: 30%;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px;
+  }
+  
+  .sidebar-menu-link span:not(.icon) {
+    display: none;
+  }
+  
+  .compose-button span:not(.icon) {
+    display: none;
+  }
+  
+  .compose-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 0;
+    margin: 0.5rem auto;
+  }
+  
+  .email-list {
+    width: calc(50% - 60px);
+  }
+}

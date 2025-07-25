@@ -7,6 +7,7 @@ use crate::models::Email;
 #[derive(Props, PartialEq, Clone)]
 pub struct InboxProps {
     pub account: Option<EmailAccount>,
+    pub on_email_selected: Option<EventHandler<Email>>,
 }
 
 pub fn Inbox(props: InboxProps) -> Element {
@@ -195,12 +196,20 @@ pub fn Inbox(props: InboxProps) -> Element {
                         // 邮件列表项 (不变)
                         {email_list.iter().enumerate().map(|(index, email)| {
                             let is_selected = *selected_index.read() == index;
+                            let email_clone = email.clone();
+                            let on_email_selected = props.on_email_selected.clone();
                             
                             rsx! {
                                 div {
                                     key: "{index}",
                                     class: if is_selected { "email-item selected" } else { "email-item" },
-                                    onclick: move |_| selected_index.set(index),
+                                    onclick: move |_| {
+                                        selected_index.set(index);
+                                        // 当邮件被选中时，通知父组件
+                                        if let Some(ref callback) = on_email_selected {
+                                            callback.call(email_clone.clone());
+                                        }
+                                    },
                                     
                                     div {
                                         class: "email-checkbox-wrapper",

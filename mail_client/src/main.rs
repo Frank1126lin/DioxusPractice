@@ -8,9 +8,10 @@ mod components;
 mod models;
 mod service;
 
-use components::{Inbox, Composer, Sidebar};
+use components::{Inbox, Composer, Sidebar, EmailDetail};
 use components::layout_resizer::{ResizeData, ResizeHandle, use_resize_state};
 use models::email::{EmailAccount, AccountList};
+use models::Email;
 use components::login_page::LoginPage;
 
 #[derive(Clone, PartialEq)]
@@ -33,7 +34,8 @@ fn main() {
             WindowBuilder::new()
                 .with_title("RustMail")
                 .with_resizable(true)
-                .with_inner_size(LogicalSize::new(1200.0, 800.0)),  // 更大的初始窗口
+                .with_inner_size(LogicalSize::new(1200.0, 800.0))  // 初始窗口大小
+                .with_maximized(true),  // 启动时最大化窗口
         );
     
     dioxus_desktop::launch::launch(
@@ -50,6 +52,7 @@ pub fn App() -> Element {
     let mut current_account = use_signal(|| None::<EmailAccount>);
     let mut show_login = use_signal(|| true);
     let mut show_middle_column = use_signal(|| true);
+    let mut selected_email = use_signal(|| None::<Email>);
 
     // 获取拖拽状态 - 添加 mut 关键字
     let (mut resize_data, mut column_widths) = use_resize_state();
@@ -221,7 +224,12 @@ pub fn App() -> Element {
                             
                             // 邮件列表内容
                             match *current_page.read() {
-                                Page::Inbox => rsx!(Inbox { account: current_account.read().clone() }),
+                                Page::Inbox => rsx!(Inbox { 
+                                    account: current_account.read().clone(),
+                                    on_email_selected: move |email: Email| {
+                                        selected_email.set(Some(email));
+                                    }
+                                }),
                                 Page::Sent => rsx!(div { class: "empty-state", "已发送邮件（待实现）" }),
                                 Page::Drafts => rsx!(div { class: "empty-state", "草稿箱（待实现）" }),
                                 Page::Deleted => rsx!(div { class: "empty-state", "已删除邮件（待实现）" }),
@@ -260,13 +268,20 @@ pub fn App() -> Element {
                                     full_width: !*show_middle_column.read(),
                                 }
                             ),
-                            _ => rsx!(
-                                div { 
-                                    class: "welcome-message",
-                                    h2 { "欢迎使用 RustMail" }
-                                    p { "请从左侧选择邮件查看详情，或点击「写邮件」" }
+                            _ => {
+                                // 显示选中的邮件详情或欢迎信息
+                                if let Some(email) = selected_email.read().as_ref() {
+                                    rsx!(EmailDetail { email: email.clone() })
+                                } else {
+                                    rsx!(
+                                        div { 
+                                            class: "welcome-message",
+                                            h2 { "欢迎使用 RustMail" }
+                                            p { "请从左侧选择邮件查看详情，或点击「写邮件」" }
+                                        }
+                                    )
                                 }
-                            ),
+                            },
                         }
                     }
                 }

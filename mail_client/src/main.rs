@@ -92,7 +92,7 @@ pub fn App() -> Element {
                     // 调整侧边栏宽度
                     let new_width = (data.start_width / data.container_width * 100.0 + delta_percent)
                         .max(10.0)  // 最小宽度10%
-                        .min(40.0); // 最大宽度40%
+                        .min(20.0); // 最大宽度20%
                     
                     // 计算变化量
                     let change = new_width - sidebar_width;
@@ -108,7 +108,7 @@ pub fn App() -> Element {
                     // 调整邮件列表宽度
                     let new_width = (data.start_width / data.container_width * 100.0 + delta_percent)
                         .max(20.0)  // 最小宽度20%
-                        .min(60.0); // 最大宽度60%
+                        .min(30.0); // 最大宽度60%
                     
                     // 计算变化量
                     let change = new_width - email_list_width;
@@ -170,15 +170,10 @@ pub fn App() -> Element {
                         }
                     }
                     
-                    // 用户信息
+                    // 用户信息 - 移除头像和下拉箭头
                     div {
                         class: "user-info",
                         span { "{current_account.read().as_ref().map_or(String::new(), |acc| acc.address.clone())}" }
-                        span { class: "dropdown-arrow", "▼" }
-                        img { 
-                            class: "avatar",
-                            src: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" 
-                        }
                     }
                 }
                 

@@ -57,7 +57,6 @@ pub fn Sidebar(props: SidebarProps) -> Element {
                         span { "草稿箱" }
                     }
                 }
-                // 增加已删除页面
                 li {
                     class: "sidebar-menu-item",
                     div {
@@ -70,7 +69,6 @@ pub fn Sidebar(props: SidebarProps) -> Element {
                         span { "已删除" }
                     }
                 }
-                // 增加垃圾邮件页面
                 li {
                     class: "sidebar-menu-item",
                     div {
@@ -83,20 +81,9 @@ pub fn Sidebar(props: SidebarProps) -> Element {
                         span { "垃圾邮件" }
                     }
                 }
-                // 移除应用分类和下面的云盘、附件管理
             }
             
-            // 用户账户信息
-            div {
-                class: "account-info",
-                if let Some(account) = props.current_account.as_ref() {
-                    div {
-                        class: "current-account",
-                        span { class: "account-icon", "👤" }
-                        span { class: "account-address", "{account.address}" }
-                    }
-                }
-            }
+            // 移除底部账户信息区域
         }
     }
 }

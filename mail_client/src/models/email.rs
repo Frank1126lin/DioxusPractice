@@ -1,4 +1,6 @@
-#[derive(Clone, Debug, PartialEq)]
+use serde::{Serialize, Deserialize};
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EmailAccount {
     pub address: String,
     pub password: String,
@@ -11,14 +13,14 @@ pub struct EmailAccount {
 
 pub type AccountList = Vec<EmailAccount>;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Attachment {
     pub filename: String,
     pub content_type: String,
     pub data: Vec<u8>,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Email {
     pub id: String,
     pub from: String,
@@ -32,7 +34,7 @@ pub struct Email {
     pub status: EmailStatus,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub enum EmailStatus {
     Draft,
     Sending,

@@ -17,7 +17,8 @@ pub fn use_resize_state() -> (Signal<ResizeData>, Signal<(f64, f64, f64)>) {
     let resize_data = use_signal(ResizeData::default);
     
     // 创建保存侧边栏、邮件列表和内容区宽度百分比的信号
-    let column_widths = use_signal(|| (20.0, 30.0, 50.0)); // 默认宽度百分比 (侧边栏, 邮件列表, 内容区)
+    // 我们仍然保留默认宽度，它们会在加载时被覆盖
+    let column_widths = use_signal(|| (10.0, 20.0, 70.0)); // 新的默认宽度百分比 (侧边栏, 邮件列表, 内容区)
     
     (resize_data, column_widths)
 }
